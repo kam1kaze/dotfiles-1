@@ -96,8 +96,20 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
+# fix shift - tab for completions
+# idk why vi-mode breaks this
+bindkey '^[[Z' reverse-menu-complete
+
+# use vim keys to navigate completions
+zstyle ':completion:*' menu select
+zmodload zsh/complist
+
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'k' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+
 # source some stuff?
-autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
