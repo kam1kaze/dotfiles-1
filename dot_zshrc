@@ -98,7 +98,11 @@ zstyle :bracketed-paste-magic paste-finish pastefinish
 
 # fix shift - tab for completions
 # idk why vi-mode breaks this
-bindkey '^[[Z' reverse-menu-complete
+bindkey -M viins '^[[Z' reverse-menu-complete
+bindkey -M vicmd '^[[Z' reverse-menu-complete
+
+# vi-mode key timeout
+export KEYTIMEOUT=1
 
 # use vim keys to navigate completions
 zstyle ':completion:*' menu select
