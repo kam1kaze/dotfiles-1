@@ -86,6 +86,7 @@ plugins=(
 	zsh-completions
 	zsh-syntax-highlighting
 	zsh-autosuggestions
+	vi-mode
 )
 # This speeds up pasting w/ autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238
@@ -100,6 +101,7 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
+# source some stuff?
 autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
@@ -141,3 +143,24 @@ command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 # ( ) # Hide shell job control messages.
 (cat ~/.cache/wal/sequences &)
 
+# Change cursor shape in zsh vi-mode
+function zle-keymap-select zle-line-init
+{
+    # change cursor shape in iTerm2
+    case $KEYMAP in
+        vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
+        viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
+    esac
+
+    zle reset-prompt
+    zle -R
+}
+
+function zle-line-finish
+{
+    print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
+}
+
+zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
