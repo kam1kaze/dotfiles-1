@@ -1,0 +1,101 @@
+# default mode
+:: default : yabai -m config window_border on ; yabai -m config active_window_border_color 0xff607B8B
+
+default < cmd - return        : iterm
+default < cmd + shift - n     : open-app finder
+default < cmd + shift - s     : open -a Spotify
+default < cmd + shift - f     : open -n -F -a firefox
+
+# cycle forwards
+default < alt - tab : yabai -m query --spaces \
+  | jq -re ".[] | select(.visible == 1).index" \
+  | xargs -I{} yabai -m query --windows --space {} \
+  | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id" \
+  | xargs -I{} yabai -m window --focus {}
+
+# cycle backwards
+default < shift +  alt - tab : yabai -m query --spaces \
+  | jq -re ".[] | select(.visible == 1).index" \
+  | xargs -I{} yabai -m query --windows --space {} \
+  | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | nth(index(map(select(.focused == 1))) - 1).id" \
+  | xargs -I{} yabai -m window --focus {}
+
+default < cmd - 1 : yabai -m space --focus 1
+default < cmd - 2 : yabai -m space --focus 2
+default < cmd - 3 : yabai -m space --focus 3
+default < cmd - 4 : yabai -m space --focus 4
+default < cmd - 5 : yabai -m space --focus 5
+default < cmd - 6 : yabai -m space --focus 6
+default < cmd - 7 : yabai -m space --focus 7
+default < cmd - 8 : yabai -m space --focus 8
+default < cmd - 9 : yabai -m space --focus 9
+default < cmd - 0 : yabai -m space --focus 10
+
+default < cmd + shift - 1 : yabai -m window --space 1
+default < cmd + shift - 2 : yabai -m window --space 2
+default < cmd + shift - 3 : yabai -m window --space 3
+default < cmd + shift - 4 : yabai -m window --space 4
+default < cmd + shift - 5 : yabai -m window --space 5
+default < cmd + shift - 6 : yabai -m window --space 6
+default < cmd + shift - 7 : yabai -m window --space 7
+default < cmd + shift - 8 : yabai -m window --space 8
+default < cmd + shift - 9 : yabai -m window --space 9
+default < cmd + shift - 0 : yabai -m window --space 10
+
+# toggle mode
+:: toggle : yabai -m config window_border on ; yabai -m config active_window_border_color 0xffFFFFD8
+toggle < r     : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+toggle < b     : togglebar
+toggle < o     : yabai -m space --padding rel:-10:-10:-10:-10
+toggle < p     : yabai -m space --padding rel:10:10:10:10
+toggle < u     : yabai -m space --gap rel:-10
+toggle < i     : yabai -m space --gap rel:10
+toggle < g     : yabai -m space --toggle gap ; yabai -m space --toggle padding
+toggle < space : yabai -m window --toggle float
+toggle < q     : yabai -m config layout bsp
+toggle < e     : yabai -m config layout float
+toggle < c     : yabai -m window --toggle float ; yabai -m window --grid 1:1:0:0:1:1
+toggle < s     : yabai -m window --toggle sticky
+toggle < t     : yabai -m window --toggle topmost
+
+# focus mode
+:: focus : yabai -m config window_border on ; yabai -m config active_window_border_color 0xffC7CEEA
+focus < h : yabai -m window --focus west
+focus < j : yabai -m window --focus south
+focus < k : yabai -m window --focus north
+focus < l : yabai -m window --focus east
+
+# resize mode
+:: resize : yabai -m config window_border on ; yabai -m config active_window_border_color 0xffB5EAD7
+resize < h : yabai -m window west --resize right:-10:0 2> /dev/null || yabai -m window --resize right:-10:0
+resize < j : yabai -m window north --resize bottom:0:10 2> /dev/null || yabai -m window --resize bottom:0:10
+resize < k : yabai -m window south --resize top:0:-10 2> /dev/null || yabai -m window --resize top:0:-10
+resize < l : yabai -m window east --resize left:10:0 2> /dev/null || yabai -m window --resize left:10:0
+
+# warp mode
+:: warp : yabai -m config window_border on ; yabai -m config active_window_border_color 0xffFF9AA2
+warp < h : yabai -m window --warp west
+warp < j : yabai -m window --warp south
+warp < k : yabai -m window --warp north
+warp < l : yabai -m window --warp east
+
+# swap mode
+:: swap : yabai -m config window_border on ; yabai -m config active_window_border_color 0xffFFDAC1
+swap < h : yabai -m window --swap west
+swap < j : yabai -m window --swap south
+swap < k : yabai -m window --swap north
+swap < l : yabai -m window --swap east
+
+# passthrough mode
+:: passthrough : yabai -m config window_border off
+
+# mode switching
+focus, resize, warp, swap, toggle           < escape    ;  default
+default, focus, resize, warp, swap, toggle  < ctrl - f  ;  focus
+default, focus, resize, warp, swap, toggle  < ctrl - z  ;  resize
+default, focus, resize, warp, swap, toggle  < ctrl - m  ;  warp
+default, focus, resize, warp, swap, toggle  < ctrl - s  ;  swap
+default, focus, resize, warp, swap, toggle  < ctrl - t  ;  toggle
+default, focus, resize, warp, swap, toggle  < ctrl - p  ;  passthrough
+passthrough				    < ctrl - p  ;  default
+
