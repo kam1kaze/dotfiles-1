@@ -1,7 +1,7 @@
-# default mode
+g default mode
 :: default : yabai -m config window_border on ; yabai -m config active_window_border_color 0xff607B8B
 
-default < cmd - return        : iterm
+default < cmd - return        : iterm cd
 default < cmd + shift - n     : open-app finder
 default < cmd + shift - s     : open -a Spotify
 default < cmd + shift - f     : open -n -F -a firefox
