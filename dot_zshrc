@@ -90,7 +90,7 @@ plugins=(
 	git
 	zsh-syntax-highlighting
 	zsh-autosuggestions
-	vi-mode
+	zsh-vim-mode
 )
 # This speeds up pasting w/ autosuggest
 # https://github.com/zsh-users/zsh-autosuggestions/issues/238
