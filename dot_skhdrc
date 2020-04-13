@@ -1,4 +1,4 @@
-g default mode
+# default mode
 :: default : yabai -m config window_border on ; yabai -m config active_window_border_color 0xff607B8B
 
 default < cmd - return        : ttab -a iTerm2 -w -d ~
