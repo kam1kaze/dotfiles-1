@@ -1,13 +1,13 @@
-export ZSH="/Users/jacobethandelarosa-frio/.config/zsh/oh-my-zsh"
-export ZDOTDIR="/Users/jacobethandelarosa-frio/.config/zsh"
+export ZSH="$HOME/.config/zsh/oh-my-zsh"
+export ZDOTDIR="$HOME/.config/zsh"
 export VISUAL=nvim
 export EDITOR="$VISUAL"
-export SPICETIFY_CONFIG="/Users/jacobethandelarosa-frio/Library/spicetify_data"
-export HISTFILE="/Users/jacobethandelarosa-frio/.cache/zsh/zsh-history"
-export GOPATH="/Users/jacobethandelarosa-frio/Library/go"
-export PYTHONSTARTUP="/Users/jacobethandelarosa-frio/.config/python/.pythonrc"
-export PYLINTHOME="/Users/jacobethandelarosa-frio/.config/python/pylint"
-export STARSHIP_CONFIG="~/.config/zsh"
+export SPICETIFY_CONFIG="$HOME/Library/spicetify_data"
+export HISTFILE="$HOME/.cache/zsh/zsh-history"
+export GOPATH="$HOME/Library/go"
+export PYTHONSTARTUP="$HOME/.config/python/.pythonrc"
+export PYLINTHOME="$HOME/.config/python/pylint"
+export STARSHIP_CONFIG="$HOME/.config/zsh"
 
 HYPHEN_INSENSITIVE="true"
 
