@@ -23,13 +23,10 @@ set autoindent
 set clipboard+=unnamedplus
 set backspace=indent,eol,start
 set hidden
-set incsearch
-set hlsearch
 set ignorecase
 set smartcase
 set noruler
 set noshowmode
-set wildmenu                  
 set mouse=a
 set number
 set cmdheight=2
@@ -38,8 +35,6 @@ set laststatus=0
 set softtabstop=4
 set undofile
 set undodir=$HOME/.config/nvim/undodir
-set undolevels=1000
-set undoreload=10000
 
 
 " mappings

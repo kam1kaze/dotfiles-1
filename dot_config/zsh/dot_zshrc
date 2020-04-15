@@ -4,10 +4,12 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 export SPICETIFY_CONFIG="/Users/jacobethandelarosa-frio/Library/spicetify_data"
 export HISTFILE="/Users/jacobethandelarosa-frio/.cache/zsh/zsh-history"
+export GOPATH="/Users/jacobethandelarosa-frio/Library/go"
+export PYTHONSTARTUP="/Users/jacobethandelarosa-frio/.config/python/.pythonrc"
+export PYLINTHOME="/Users/jacobethandelarosa-frio/.config/python/pylint"
+export STARSHIP_CONFIG="~/.config/zsh"
 
 HYPHEN_INSENSITIVE="true"
-
-ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(
 	git
@@ -28,6 +30,7 @@ MODE_CURSOR_VISUAL="steady block"
 MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL"
 MODE_INDICATOR=""
 VIM_MODE_INITIAL_KEYMAP=last
+SPACESHIP_VI_MODE_SHOW=false
 
 # This speeds up pasting w/ autosuggest
 pasteinit() {
@@ -67,3 +70,6 @@ command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 
 # move zcompdump files
 compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
+
+# starship prompt
+eval "$(starship init zsh)"
