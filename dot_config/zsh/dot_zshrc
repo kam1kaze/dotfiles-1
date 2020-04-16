@@ -1,24 +1,5 @@
-export ZSH="$HOME/.config/zsh/oh-my-zsh"
-export ZDOTDIR="$HOME/.config/zsh"
-export VISUAL=nvim
-export EDITOR="$VISUAL"
-export SPICETIFY_CONFIG="$HOME/Library/spicetify_data"
+# keep these dumb files away from my $HOME and .config folder
 export HISTFILE="$HOME/.cache/zsh/zsh-history"
-export GOPATH="$HOME/Library/go"
-export PYTHONSTARTUP="$HOME/.config/python/.pythonrc"
-export PYLINTHOME="$HOME/.config/python/pylint"
-export STARSHIP_CONFIG="$HOME/.config/zsh"
-
-HYPHEN_INSENSITIVE="true"
-
-plugins=(
-	git
-	zsh-vim-mode
-	zsh-autosuggestions
-	fast-syntax-highlighting
-)
-
-source $ZSH/oh-my-zsh.sh
 
 # zsh-vim-mode
 # change cursor shape depending on mode
@@ -44,10 +25,14 @@ pastefinish() {
 zstyle :bracketed-paste-magic paste-init pasteinit
 zstyle :bracketed-paste-magic paste-finish pastefinish
 
-# use vim keys to navigate completions
+# Basic auto/tab complete:
+autoload -U compinit
 zstyle ':completion:*' menu select
 zmodload zsh/complist
+compinit
+_comp_options+=(globdots)
 
+# use vim keys to navigate completions
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
@@ -65,11 +50,9 @@ command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 # ( ) # Hide shell job control messages.
 (cat ~/.cache/wal/sequences &)
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# move zcompdump files
-compinit -d ~/.cache/zsh/zcompdump-$ZSH_VERSION
-
 # starship prompt
 eval "$(starship init zsh)"
+
+source $HOME/.config/zsh/plugins/zsh-vim-mode/zsh-vim-mode.plugin.zsh 2>/dev/null
+source $HOME/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+source $HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2>/dev/null
