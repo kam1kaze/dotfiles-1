@@ -1,8 +1,4 @@
-# keep these dumb files away from my $HOME and .config folder
-export HISTFILE="$HOME/.cache/zsh/zsh-history"
-
 # zsh-vim-mode
-# change cursor shape depending on mode
 MODE_CURSOR_VIINS="steady bar"
 MODE_CURSOR_REPLACE="blinking underline"
 MODE_CURSOR_VICMD="steady block"
@@ -13,30 +9,21 @@ MODE_INDICATOR=""
 VIM_MODE_INITIAL_KEYMAP=last
 SPACESHIP_VI_MODE_SHOW=false
 
-# This speeds up pasting w/ autosuggest
-pasteinit() {
-  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
-  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
-}
-
-pastefinish() {
-  zle -N self-insert $OLD_SELF_INSERT
-}
-zstyle :bracketed-paste-magic paste-init pasteinit
-zstyle :bracketed-paste-magic paste-finish pastefinish
-
-# Basic auto/tab complete:
+# Auto/tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
+setopt MENU_COMPLETE
 
 # use vim keys to navigate completions
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'k' vi-up-line-or-history
 bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
+bindkey -v '^?' backward-delete-char
 
 # Aliases
 alias config='chezmoi'
@@ -53,6 +40,16 @@ command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 # starship prompt
 eval "$(starship init zsh)"
 
-source $HOME/.config/zsh/plugins/zsh-vim-mode/zsh-vim-mode.plugin.zsh 2>/dev/null
-source $HOME/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
-source $HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2>/dev/null
+export HISTFILE="$HOME/.config/zsh/zsh-history"
+compinit -d ~/.config/zsh/zcompdump-$ZSH_VERSION
+
+plugins=(
+	git
+	zsh-autosuggestions
+	fast-syntax-highlighting
+	zsh-vim-mode
+)
+
+export ZSH=$HOME/.config/zsh/oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+

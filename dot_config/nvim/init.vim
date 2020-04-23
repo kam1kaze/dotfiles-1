@@ -3,81 +3,71 @@ syntax on
 
 call plug#begin('~/.config/nvim/plugged')
 
-  Plug 'junegunn/vim-plug'
-
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'dense-analysis/ale'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
   Plug 'romainl/vim-cool'
-  Plug 'tommcdo/vim-lion'
   Plug 'dylanaraps/wal.vim'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'lifepillar/vim-mucomplete'
+  Plug 'neovim/nvim-lsp'
+  Plug 'tweekmonster/startuptime.vim'
 
 call plug#end()
 
-" Plugin settings here
+
+" plugin settings
+
 
 " various settings
-set autoindent
 set clipboard+=unnamedplus
 set backspace=indent,eol,start
+set omnifunc=v:lua.vim.lsp.omnifunc
 set hidden
 set ignorecase
 set smartcase
 set noruler
 set noshowmode
+set noshowcmd
 set mouse=a
 set number
+set wildcharm=<C-z>
 set cmdheight=2
 set scrolloff=5
 set laststatus=0
 set softtabstop=4
 set undofile
 set undodir=$HOME/.config/nvim/undodir
+set lazyredraw
+set completeopt+=menuone
+set shortmess+=c
+set updatetime=100
 
 
 " mappings
+" Make Y work like D or C
 nnoremap Y y$
 
-nnoremap gb :ls<CR>:buffer<Space>
-nnoremap gB :ls<CR>:sbuffer<Space>
-nnoremap ,b :buffer *
-nnoremap ,B :sbuffer *
+" Buffer switching
+nnoremap gb :buffer *
 
-" Use tab for trigger completion with characters ahead and navigate.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" Quick search/replace
+nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand('<cword>')<CR>\>/
+nnoremap <Space>%       :%s/\<<C-r>=expand('<cword>')<CR>\>/
 
+" Quick change
+nnoremap ,; *``cgn
+nnoremap ,, #``cgN
 
-" Use <cr> to confirm completion
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+" Better split switching
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-
-" functions
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" Smooth searching
+cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"
+cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"
 
 
 " autocommands
@@ -86,6 +76,33 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
+
+" Disable auto commenting on newlines
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+
+" lua
+:lua << EOF
+  local nvim_lsp = require('nvim_lsp')
+  nvim_lsp.pyls.setup{}
+  require'nvim_lsp'.pyls.setup{}
+EOF
+
+let settings = {
+          \   "pyls" : {
+          \     "enable" : v:true,
+          \     "trace" : { "server" : "verbose", },
+          \     "commandPath" : "",
+          \     "configurationSources" : [ "pycodestyle" ],
+          \     "plugins" : {
+          \       "jedi_completion" : { "enabled" : v:true, },
+          \       "jedi_hover" : { "enabled" : v:true, },
+          \       "jedi_references" : { "enabled" : v:true, },
+          \       "jedi_signature_help" : { "enabled" : v:true, },
+          \       "jedi_symbols" : {
+          \         "enabled" : v:true,
+          \         "all_scopes" : v:true,
+          \       }}}}
 
 
 " colorscheme

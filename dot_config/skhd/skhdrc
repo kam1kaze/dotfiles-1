@@ -1,10 +1,12 @@
 # default mode
-:: default : yabai -m config window_border on ; yabai -m config active_window_border_color 0xff607B8B
+:: default : yabai -m config window_border on ; yabaiborder
 
-default < cmd - return        : ttab -a iTerm2 -w -d ~ -q
+default < cmd - return        : open -n -a Alacritty
 default < cmd + shift - f     : open-app finder
 default < cmd + shift - s     : open -a Spotify
 default < cmd + shift - t     : open -n -g -a firefox
+
+default < alt + shift - 0     : scr
 
 # cycle forwards
 default < alt - tab : yabai -m query --spaces \
@@ -43,11 +45,11 @@ default < cmd + shift - 9 : yabai -m window --space 9
 default < cmd + shift - 0 : yabai -m window --space 10
 
 # toggle mode
-:: toggle : yabai -m config window_border on ; yabai -m config active_window_border_color 0xffFFFFD8
+:: toggle : yabai -m config window_border on ; yabai -m config active_window_border_color 0xff779ECB
 toggle < r     : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 toggle < b     : togglebar
-toggle < o     : yabai -m space --padding rel:-10:-10:-10:-10
-toggle < p     : yabai -m space --padding rel:10:10:10:10
+toggle < p     : yabai -m space --padding rel:-10:-10:-10:-10
+toggle < o     : yabai -m space --padding rel:10:10:10:10
 toggle < u     : yabai -m space --gap rel:-10
 toggle < i     : yabai -m space --gap rel:10
 toggle < g     : yabai -m space --toggle gap ; yabai -m space --toggle padding
@@ -60,10 +62,12 @@ toggle < t     : yabai -m window --toggle topmost
 
 # focus mode
 :: focus : yabai -m config window_border on ; yabai -m config active_window_border_color 0xffC7CEEA
-focus < h : yabai -m window --focus west
-focus < j : yabai -m window --focus south
-focus < k : yabai -m window --focus north
-focus < l : yabai -m window --focus east
+focus < h        : yabai -m window --focus west
+focus < j        : yabai -m window --focus south
+focus < k        : yabai -m window --focus north
+focus < l        : yabai -m window --focus east
+focus < left     : yabai -m space --focus prev || yabai -m space --focus last
+focus < right    : yabai -m space --focus next || yabai -m space --focus first
 
 # resize mode
 :: resize : yabai -m config window_border on ; yabai -m config active_window_border_color 0xffB5EAD7

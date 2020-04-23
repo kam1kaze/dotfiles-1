@@ -1,1 +1,18 @@
-export ZDOTDIR="/Users/jacobethandelarosa-frio/.config/zsh"
+export ZSH=$HOME/.config/zsh/oh-my-zsh
+export ZDOTDIR=$HOME/.config/zsh
+export HISTFILE=$HOME/.config/zsh/zsh-history
+
+export STARSHIP_CONFIG=$HOME/.config/zsh/starship.toml
+
+export GOPATH=$HOME/Library/go
+export PYTHONSTARTUP=$HOME/.config/python/.pythonrc
+export PYLINTHOME=$HOME/.config/python/pylint
+export PYENV_ROOT=$HOME/.config/.pyenv
+
+export NPM_CONFIG_USERCONFIG=$HOME/.config/npm/.npmrc
+export SPICETIFY_CONFIG=$HOME/Library/spicetify_data
+export LESSHISTFILE=$HOME/.cache/less/lesshst
+
+export VISUAL=nvim
+export EDITOR=$VISUAL
+
