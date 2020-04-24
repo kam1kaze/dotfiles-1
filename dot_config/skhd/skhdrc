@@ -7,6 +7,7 @@ default < cmd + shift - s     : open -a Spotify
 default < cmd + shift - t     : open -n -g -a firefox
 
 default < alt + shift - 0     : scr
+default < ctrl + shift - 0    : scr -s
 
 # cycle forwards
 default < alt - tab : yabai -m query --spaces \
@@ -48,10 +49,10 @@ default < cmd + shift - 0 : yabai -m window --space 10
 :: toggle : yabai -m config window_border on ; yabai -m config active_window_border_color 0xff779ECB
 toggle < r     : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 toggle < b     : togglebar
-toggle < p     : yabai -m space --padding rel:-10:-10:-10:-10
-toggle < o     : yabai -m space --padding rel:10:10:10:10
-toggle < u     : yabai -m space --gap rel:-10
-toggle < i     : yabai -m space --gap rel:10
+toggle < p     : yabai -m space --padding rel:-5:-5:-5:-5
+toggle < o     : yabai -m space --padding rel:5:5:5:5
+toggle < u     : yabai -m space --gap rel:-5
+toggle < i     : yabai -m space --gap rel:5
 toggle < g     : yabai -m space --toggle gap ; yabai -m space --toggle padding
 toggle < space : yabai -m window --toggle float
 toggle < q     : yabai -m config layout bsp

@@ -80,6 +80,9 @@ autocmd BufReadPost *
 " Disable auto commenting on newlines
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
+" Automatically close preview window during completions
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
+
 
 " lua
 :lua << EOF
