@@ -25,14 +25,17 @@ shift +  alt - tab : yabai -m query --spaces \
 # toggles
 cmd + shift - r      : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 cmd + shift - b      : togglebar
+
 cmd + shift - p      : yabai -m space --padding rel:-5:-5:-5:-5
 cmd + shift - o      : yabai -m space --padding rel:5:5:5:5
 cmd + shift - u      : yabai -m space --gap rel:-5
 cmd + shift - i      : yabai -m space --gap rel:5
-alt - g              : yabai -m space --toggle gap ; yabai -m space --toggle padding
+cmd + shift - g      : togglegaps
+
 alt - space          : yabai -m window --toggle float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
 alt - s              : yabai -m window --toggle sticky
 alt - o              : yabai -m window --toggle topmost
+
 alt + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
 
 # focus
@@ -52,8 +55,8 @@ cmd - 8 : yabai -m space --focus 8
 cmd - 9 : yabai -m space --focus 9
 cmd - 0 : yabai -m space --focus 10
 
-cmd - left  : yabai -m space --focus prev || yabai -m space --focus last
-cmd - right : yabai -m space --focus next || yabai -m space --focus first
+# cmd - left  : yabai -m space --focus prev || yabai -m space --focus last
+# cmd - right : yabai -m space --focus next || yabai -m space --focus first
 
 # resize
 alt + shift - w : yabai -m window south --resize top:0:-10 2> /dev/null || yabai -m window --resize top:0:-10
@@ -79,17 +82,17 @@ ctrl + shift - j : yabai -m window --swap south
 ctrl + shift - k : yabai -m window --swap north
 ctrl + shift - l : yabai -m window --swap east
 
-# swap
+# warp
 cmd + shift - h : yabai -m window --warp west
 cmd + shift - j : yabai -m window --warp south
 cmd + shift - k : yabai -m window --warp north
 cmd + shift - l : yabai -m window --warp east
 
 # set insertion point in focused container
-alt + shift - h : yabai -m window --insert west
-alt + shift - j : yabai -m window --insert south
-alt + shift - k : yabai -m window --insert north
-alt + shift - l : yabai -m window --insert east
+alt + shift - h : yabaiborder ; yabai -m window --insert west
+alt + shift - j : yabaiborder ; yabai -m window --insert south
+alt + shift - k : yabaiborder ; yabai -m window --insert north
+alt + shift - l : yabaiborder ; yabai -m window --insert east
 
 # rotate tree
 alt - r : yabai -m space --rotate 90
@@ -100,8 +103,8 @@ alt - y : yabai -m space --mirror y-axis
 # mirror tree x-axis
 alt - x : yabai -m space --mirror x-axis
 
-# toggle window parent zoom
-alt - d : yabai -m window --toggle zoom-parent
+# toggle window fullscreen zoom
+alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
 alt - e : yabai -m window --toggle split
