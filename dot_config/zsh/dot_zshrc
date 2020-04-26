@@ -9,7 +9,7 @@ MODE_INDICATOR=""
 VIM_MODE_INITIAL_KEYMAP=last
 SPACESHIP_VI_MODE_SHOW=false
 
-# Auto/tab complete:
+# auto/tab complete:
 autoload -U compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -25,14 +25,17 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
-# Aliases
+# fix pasting
+zstyle ':bracketed-paste-magic' active-widgets '.self-*'
+
+# aliases
 alias config='chezmoi'
 alias bluetooth='bluetoothconnector'
 
-# Use neovim for vim if present.
+# use neovim for vim if present.
 command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
 
-# Import colorscheme from 'wal' asynchronously
+# import colorscheme from 'wal' asynchronously
 # &   # Run the process in the background.
 # ( ) # Hide shell job control messages.
 (cat ~/.cache/wal/sequences &)
