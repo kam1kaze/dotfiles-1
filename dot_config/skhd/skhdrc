@@ -1,7 +1,6 @@
 # open apps
 cmd - return    : open -n -a alacritty
 cmd + shift - f : open-app finder
-cmd + shift - s : open -a Spotify
 cmd + shift - t : open -n -g -a firefox
 
 # screenshots
@@ -36,7 +35,7 @@ alt - space          : yabai -m window --toggle float && /tmp/yabai-restore/$(ya
 alt - s              : yabai -m window --toggle sticky
 alt - o              : yabai -m window --toggle topmost
 
-alt + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+cmd + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
 
 # focus
 cmd - h     : yabai -m window --focus west
@@ -59,10 +58,10 @@ cmd - 0 : yabai -m space --focus 10
 # cmd - right : yabai -m space --focus next || yabai -m space --focus first
 
 # resize
-alt + shift - w : yabai -m window south --resize top:0:-10 2> /dev/null || yabai -m window --resize top:0:-10
-alt + shift - a : yabai -m window west --resize right:-10:0 2> /dev/null || yabai -m window --resize right:-10:0
-alt + shift - s : yabai -m window north --resize bottom:0:10 2> /dev/null || yabai -m window --resize bottom:0:10
-alt + shift - d : yabai -m window east --resize left:10:0 2> /dev/null || yabai -m window --resize left:10:0
+alt + shift - w : yabai -m window south --resize top:0:-20 2> /dev/null || yabai -m window --resize top:0:-20
+alt + shift - a : yabai -m window west --resize right:-20:0 2> /dev/null || yabai -m window --resize right:-20:0
+alt + shift - s : yabai -m window north --resize bottom:0:20 2> /dev/null || yabai -m window --resize bottom:0:20
+alt + shift - d : yabai -m window east --resize left:20:0 2> /dev/null || yabai -m window --resize left:20:0
 
 # warp
 cmd + shift - 1 : yabai -m window --space 1
@@ -77,22 +76,22 @@ cmd + shift - 9 : yabai -m window --space 9
 cmd + shift - 0 : yabai -m window --space 10
 
 # swap
-ctrl + shift - h : yabai -m window --swap west
-ctrl + shift - j : yabai -m window --swap south
-ctrl + shift - k : yabai -m window --swap north
-ctrl + shift - l : yabai -m window --swap east
+cmd + shift - h : yabai -m window --swap west
+cmd + shift - j : yabai -m window --swap south
+cmd + shift - k : yabai -m window --swap north
+cmd + shift - l : yabai -m window --swap east
 
 # warp
-cmd + shift - h : yabai -m window --warp west
-cmd + shift - j : yabai -m window --warp south
-cmd + shift - k : yabai -m window --warp north
-cmd + shift - l : yabai -m window --warp east
+cmd + ctrl - h : yabai -m window --warp west
+cmd + ctrl - j : yabai -m window --warp south
+cmd + ctrl - k : yabai -m window --warp north
+cmd + ctrl - l : yabai -m window --warp east
 
 # set insertion point in focused container
-alt + shift - h : yabaiborder ; yabai -m window --insert west
-alt + shift - j : yabaiborder ; yabai -m window --insert south
-alt + shift - k : yabaiborder ; yabai -m window --insert north
-alt + shift - l : yabaiborder ; yabai -m window --insert east
+cmd + shift - w : yabaiborder ; yabai -m window --insert north
+cmd + shift - a : yabaiborder ; yabai -m window --insert west
+cmd + shift - s : yabaiborder ; yabai -m window --insert south
+cmd + shift - d : yabaiborder ; yabai -m window --insert east
 
 # rotate tree
 alt - r : yabai -m space --rotate 90
@@ -108,6 +107,11 @@ alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
 alt - e : yabai -m window --toggle split
+
+# toggle scratchpad
+# haven't been able to get this to work properly
+# not sure how it would fit into my workflow
+# alt - c : scratchpad
 
 # passthrough mode
 :: passthrough

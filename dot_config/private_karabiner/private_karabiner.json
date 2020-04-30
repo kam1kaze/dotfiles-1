@@ -147,14 +147,14 @@
                         ]
                     },
                     {
-                        "description": "Change Control + Shift + h/j/k/l to Arrows",
+                        "description": "Change Control + Alt + h/j/k/l to Arrows",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": {
                                         "mandatory": [
-                                            "shift",
+                                            "option",
                                             "control"
                                         ],
                                         "optional": [
@@ -177,7 +177,7 @@
                                     "key_code": "j",
                                     "modifiers": {
                                         "mandatory": [
-                                            "shift",
+                                            "option",
                                             "control"
                                         ],
                                         "optional": [
@@ -200,7 +200,7 @@
                                     "key_code": "k",
                                     "modifiers": {
                                         "mandatory": [
-                                            "shift",
+                                            "option",
                                             "control"
                                         ],
                                         "optional": [
@@ -223,7 +223,7 @@
                                     "key_code": "l",
                                     "modifiers": {
                                         "mandatory": [
-                                            "shift",
+                                            "option",
                                             "control"
                                         ],
                                         "optional": [

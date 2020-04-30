@@ -1,13 +1,9 @@
-# zsh-vim-mode
-MODE_CURSOR_VIINS="steady bar"
-MODE_CURSOR_REPLACE="blinking underline"
-MODE_CURSOR_VICMD="steady block"
-MODE_CURSOR_SEARCH="$MODE_CURSOR_VICMD"
-MODE_CURSOR_VISUAL="steady block"
-MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL"
-MODE_INDICATOR=""
-VIM_MODE_INITIAL_KEYMAP=last
-SPACESHIP_VI_MODE_SHOW=false
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # auto/tab complete:
 autoload -U compinit
@@ -25,34 +21,58 @@ bindkey -M menuselect 'l' vi-forward-char
 bindkey -M menuselect 'j' vi-down-line-or-history
 bindkey -v '^?' backward-delete-char
 
+# edit line in vim
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+
+# cursor shape in vim modes
+function zle-keymap-select zle-line-init
+{
+    # change cursor shape in iTerm2
+    case $KEYMAP in
+        vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
+        viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
+    esac
+
+    zle reset-prompt
+    zle -R
+}
+
+function zle-line-finish
+{
+    print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
+}
+
+zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
+
 # fix pasting
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
 
 # aliases
 alias config='chezmoi'
 alias bluetooth='bluetoothconnector'
-
-# use neovim for vim if present.
-command -v nvim >/dev/null && alias vim="nvim" vimdiff="nvim -d"
+alias vrc='config edit .config/nvim/init.vim'
+alias zrc='config edit .config/zsh/.zshrc'
+alias yrc='config edit .config/yabai/yabairc'
+alias src='config edit .config/skhd/skhdrc'
+alias vim='nvim'
+alias vimdiff='nvim -d'
 
 # import colorscheme from 'wal' asynchronously
 # &   # Run the process in the background.
 # ( ) # Hide shell job control messages.
 (cat ~/.cache/wal/sequences &)
 
-# starship prompt
-eval "$(starship init zsh)"
+# load pyenv
+eval "$(pyenv init - zsh --no-rehash)" &> /dev/null
 
 export HISTFILE="$HOME/.config/zsh/zsh-history"
 compinit -d ~/.config/zsh/zcompdump-$ZSH_VERSION
 
-plugins=(
-	git
-	zsh-autosuggestions
-	fast-syntax-highlighting
-	zsh-vim-mode
-)
+source $HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &> /dev/null
+source $HOME/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh &> /dev/null
 
-export ZSH=$HOME/.config/zsh/oh-my-zsh
-source $ZSH/oh-my-zsh.sh
-
+source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+[[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh

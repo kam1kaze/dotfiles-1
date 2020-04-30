@@ -32,7 +32,8 @@ set noshowcmd
 set mouse=a
 set number
 set wildcharm=<C-z>
-set cmdheight=2
+set cmdheight=1
+set shortmess=at
 set scrolloff=5
 set laststatus=0
 set softtabstop=4
