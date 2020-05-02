@@ -2,6 +2,7 @@
 cmd - return    : open -n -a alacritty
 cmd + shift - f : open-app finder
 cmd + shift - t : open -n -g -a firefox
+# cmd + shift - 0x2A : killall KeyCastr || open -a KeyCastr
 
 # screenshots
 alt + shift - 0  : scr
@@ -25,11 +26,11 @@ shift +  alt - tab : yabai -m query --spaces \
 cmd + shift - r      : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 cmd + shift - b      : togglebar
 
-cmd + shift - p      : yabai -m space --padding rel:-5:-5:-5:-5
-cmd + shift - o      : yabai -m space --padding rel:5:5:5:5
-cmd + shift - u      : yabai -m space --gap rel:-5
-cmd + shift - i      : yabai -m space --gap rel:5
-cmd + shift - g      : togglegaps
+cmd - 0x1E           : yabai -m space --padding rel:-5:-5:-5:-5
+cmd - 0x21           : yabai -m space --padding rel:5:5:5:5
+cmd + shift - 0x21   : yabai -m space --gap rel:-5
+cmd + shift - 0x1E   : yabai -m space --gap rel:5
+cmd - g              : togglegaps
 
 alt - space          : yabai -m window --toggle float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
 alt - s              : yabai -m window --toggle sticky
@@ -38,10 +39,10 @@ alt - o              : yabai -m window --toggle topmost
 cmd + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
 
 # focus
-cmd - h     : yabai -m window --focus west
-cmd - j     : yabai -m window --focus south
-cmd - k     : yabai -m window --focus north
-cmd - l     : yabai -m window --focus east
+cmd - h : yabai -m window --focus west
+cmd - j : yabai -m window --focus south
+cmd - k : yabai -m window --focus north
+cmd - l : yabai -m window --focus east
 
 cmd - 1 : yabai -m space --focus 1
 cmd - 2 : yabai -m space --focus 2
@@ -64,6 +65,11 @@ alt + shift - s : yabai -m window north --resize bottom:0:20 2> /dev/null || yab
 alt + shift - d : yabai -m window east --resize left:20:0 2> /dev/null || yabai -m window --resize left:20:0
 
 # warp
+cmd + shift - h : yabai -m window --warp west
+cmd + shift - j : yabai -m window --warp south
+cmd + shift - k : yabai -m window --warp north
+cmd + shift - l : yabai -m window --warp east
+
 cmd + shift - 1 : yabai -m window --space 1
 cmd + shift - 2 : yabai -m window --space 2
 cmd + shift - 3 : yabai -m window --space 3
@@ -76,16 +82,10 @@ cmd + shift - 9 : yabai -m window --space 9
 cmd + shift - 0 : yabai -m window --space 10
 
 # swap
-cmd + shift - h : yabai -m window --swap west
-cmd + shift - j : yabai -m window --swap south
-cmd + shift - k : yabai -m window --swap north
-cmd + shift - l : yabai -m window --swap east
-
-# warp
-cmd + ctrl - h : yabai -m window --warp west
-cmd + ctrl - j : yabai -m window --warp south
-cmd + ctrl - k : yabai -m window --warp north
-cmd + ctrl - l : yabai -m window --warp east
+cmd + ctrl - h : yabai -m window --swap west
+cmd + ctrl - j : yabai -m window --swap south
+cmd + ctrl - k : yabai -m window --swap north
+cmd + ctrl - l : yabai -m window --swap east
 
 # set insertion point in focused container
 cmd + shift - w : yabaiborder ; yabai -m window --insert north
@@ -93,25 +93,22 @@ cmd + shift - a : yabaiborder ; yabai -m window --insert west
 cmd + shift - s : yabaiborder ; yabai -m window --insert south
 cmd + shift - d : yabaiborder ; yabai -m window --insert east
 
-# rotate tree
-alt - r : yabai -m space --rotate 90
-
-# mirror tree y-axis
-alt - y : yabai -m space --mirror y-axis
-
-# mirror tree x-axis
-alt - x : yabai -m space --mirror x-axis
-
 # toggle window fullscreen zoom
-alt - f : yabai -m window --toggle zoom-fullscreen
+ctrl - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
-alt - e : yabai -m window --toggle split
+ctrl - e : yabai -m window --toggle split
 
-# toggle scratchpad
-# haven't been able to get this to work properly
-# not sure how it would fit into my workflow
-# alt - c : scratchpad
+# swap current and biggest node
+cmd - d : \
+    largest_id=$(yabai -m query --windows --window largest | jq -r '.id');\
+    current_id=$(yabai -m query --windows --window | jq -r '.id');\
+    if [ "$largest_id" != "$current_id" ]; then;\
+      echo "$largest_id" > "${TMPDIR}/yabai_last_window_swapped_wid";\
+      yabai -m window --swap largest;\
+    elif test -f "${TMPDIR}/yabai_last_window_swapped_wid"; then;\
+      yabai -m window --swap $(cat "${TMPDIR}/yabai_last_window_swapped_wid");\
+    fi;
 
 # passthrough mode
 :: passthrough

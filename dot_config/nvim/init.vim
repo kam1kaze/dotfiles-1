@@ -53,12 +53,12 @@ nnoremap Y y$
 nnoremap gb :buffer *
 
 " Quick search/replace
-nnoremap <Space><Space> :'{,'}s/\<<C-r>=expand('<cword>')<CR>\>/
-nnoremap <Space>%       :%s/\<<C-r>=expand('<cword>')<CR>\>/
+nnoremap <Space>ip       :'{,'}s/\<<C-r>=expand('<cword>')<CR>\>/
+nnoremap <Space><Space>  :%s/\<<C-r>=expand('<cword>')<CR>\>/
 
 " Quick change
-nnoremap ,; *``cgn
-nnoremap ,, #``cgN
+nnoremap cn *``cgn
+nnoremap cN #``cgN
 
 " Better split switching
 nnoremap <C-h> <C-w>h

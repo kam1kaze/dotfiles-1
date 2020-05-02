@@ -140,10 +140,10 @@ background_opacity: 0.9
 selection:
   #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
 
-  save_to_clipboard: true
+  save_to_clipboard: false
 
 # Allow terminal applications to change Alacritty's window title.
-  dynamic_title: true
+dynamic_title: true
 
 cursor:
   # Values for `style`:

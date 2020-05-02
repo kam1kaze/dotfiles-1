@@ -28,7 +28,7 @@ bindkey '^e' edit-command-line
 # cursor shape in vim modes
 function zle-keymap-select zle-line-init
 {
-    # change cursor shape in iTerm2
+    # change cursor shape in Alacritty
     case $KEYMAP in
         vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
         viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
@@ -71,8 +71,8 @@ eval "$(pyenv init - zsh --no-rehash)" &> /dev/null
 export HISTFILE="$HOME/.config/zsh/zsh-history"
 compinit -d ~/.config/zsh/zcompdump-$ZSH_VERSION
 
-source $HOME/.config/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh &> /dev/null
-source $HOME/.config/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh &> /dev/null
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
