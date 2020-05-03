@@ -66,7 +66,7 @@ alias vimdiff='nvim -d'
 (cat ~/.cache/wal/sequences &)
 
 # load pyenv
-eval "$(pyenv init - zsh --no-rehash)" &> /dev/null
+eval "$(pyenv init - zsh --no-rehash)"
 
 export HISTFILE="$HOME/.config/zsh/zsh-history"
 compinit -d ~/.config/zsh/zcompdump-$ZSH_VERSION

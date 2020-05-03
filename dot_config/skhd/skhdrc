@@ -2,7 +2,7 @@
 cmd - return    : open -n -a alacritty
 cmd + shift - f : open-app finder
 cmd + shift - t : open -nga firefox
-cmd + shift - 0x2A : killall KeyCastr || open -a KeyCastr --background
+# cmd + shift - 0x2A : killall KeyCastr || open -a KeyCastr --background
 
 # screenshots
 alt + shift - 0  : scr
@@ -13,23 +13,23 @@ alt - tab : yabai -m window --focus next || yabai -m window --focus "$((yabai -m
 shift + alt - tab : yabai -m window --focus prev || yabai -m window --focus "$((yabai -m query --spaces --display prev || yabai -m query --spaces --display last) | jq -re '.[] | select(.visible == 1)."last-window"')"
 
 # yabai
-cmd + shift - r      : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
-cmd + shift - q      : launchctl unload /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
-cmd + shift - y      : launchctl load /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
+cmd + shift - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+cmd + shift - q : launchctl unload /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
+cmd + shift - y : launchctl load /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
 
 # gap and padding toggles
-cmd + shift - b      : togglebar
-cmd - 0x29           : yabai -m space --padding rel:-5:-5:-5:-5
-cmd - 0x27           : yabai -m space --padding rel:5:5:5:5
-cmd + shift - 0x29   : yabai -m space --gap rel:-5
-cmd + shift - 0x27   : yabai -m space --gap rel:5
-cmd + shift - g      : togglegaps
+cmd + shift - b    : togglebar
+cmd - 0x29         : yabai -m space --padding rel:-5:-5:-5:-5
+cmd - 0x27         : yabai -m space --padding rel:5:5:5:5
+cmd + shift - 0x29 : yabai -m space --gap rel:-5
+cmd + shift - 0x27 : yabai -m space --gap rel:5
+cmd + shift - g    : togglegaps
 
 # layout toggles
-ctrl - space          : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2 && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
-ctrl - s              : yabai -m window --toggle sticky
-ctrl - o              : yabai -m window --toggle topmost
-cmd + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+ctrl - space        : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2 && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
+ctrl - s            : yabai -m window --toggle sticky
+ctrl - o            : yabai -m window --toggle topmost
+cmd + shift - space : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
 
 # focus node
 cmd - h : yabai -m window --focus west
@@ -44,16 +44,16 @@ cmd - l : yabai -m window --focus east
 # cmd + shift - l : yabai -m window --swap east
 
 # focus space
-cmd - 1 : yabai -m space --focus 1 || yabaifocus 1
-cmd - 2 : yabai -m space --focus 2 || yabaifocus 2
-cmd - 3 : yabai -m space --focus 3 || yabaifocus 3
-cmd - 4 : yabai -m space --focus 4 || yabaifocus 4
-cmd - 5 : yabai -m space --focus 5 || yabaifocus 5
-cmd - 6 : yabai -m space --focus 6 || yabaifocus 6
-cmd - 7 : yabai -m space --focus 7 || yabaifocus 7
-cmd - 8 : yabai -m space --focus 8 || yabaifocus 8
-cmd - 9 : yabai -m space --focus 9 || yabaifocus 9
-cmd - 0 : yabai -m space --focus 10 || yabaifocus 10
+cmd - 1 : yabai -m space --focus 1 || { yabai -m space --create ; yabai -m space --focus last; }
+cmd - 2 : yabai -m space --focus 2 || { yabai -m space --create ; yabai -m space --focus last; }
+cmd - 3 : yabai -m space --focus 3 || { yabai -m space --create ; yabai -m space --focus last; }
+cmd - 4 : yabai -m space --focus 4 || { yabai -m space --create ; yabai -m space --focus last; }
+cmd - 5 : yabai -m space --focus 5 || { yabai -m space --create ; yabai -m space --focus last; }
+cmd - 6 : yabai -m space --focus 6 || { yabai -m space --create ; yabai -m space --focus last; }
+cmd - 7 : yabai -m space --focus 7 || { yabai -m space --create ; yabai -m space --focus last; }
+cmd - 8 : yabai -m space --focus 8 || { yabai -m space --create ; yabai -m space --focus last; }
+cmd - 9 : yabai -m space --focus 9 || { yabai -m space --create ; yabai -m space --focus last; }
+cmd - 0 : yabai -m space --focus 10 || { yabai -m space --create ; yabai -m space --focus last; }
 
 # warp node
 cmd + shift - h : yabai -m window --warp west
@@ -62,16 +62,16 @@ cmd + shift - k : yabai -m window --warp north
 cmd + shift - l : yabai -m window --warp east
 
 # warp node to space
-cmd + shift - 1 : yabai -m window --space 1
-cmd + shift - 2 : yabai -m window --space 2 || yabaimove 2
-cmd + shift - 3 : yabai -m window --space 3 || yabaimove 3
-cmd + shift - 4 : yabai -m window --space 4 || yabaimove 4
-cmd + shift - 5 : yabai -m window --space 5 || yabaimove 5
-cmd + shift - 6 : yabai -m window --space 6 || yabaimove 6
-cmd + shift - 7 : yabai -m window --space 7 || yabaimove 7
-cmd + shift - 8 : yabai -m window --space 8 || yabaimove 8
-cmd + shift - 9 : yabai -m window --space 9 || yabaimove 9
-cmd + shift - 0 : yabai -m window --space 10 || yabaimove 10
+cmd + shift - 1 : yabai -m window --space 1 || { yabai -m space --create ; yabai -m window --space last; }
+cmd + shift - 2 : yabai -m window --space 2 || { yabai -m space --create ; yabai -m window --space last; }
+cmd + shift - 3 : yabai -m window --space 3 || { yabai -m space --create ; yabai -m window --space last; }
+cmd + shift - 4 : yabai -m window --space 4 || { yabai -m space --create ; yabai -m window --space last; }
+cmd + shift - 5 : yabai -m window --space 5 || { yabai -m space --create ; yabai -m window --space last; }
+cmd + shift - 6 : yabai -m window --space 6 || { yabai -m space --create ; yabai -m window --space last; }
+cmd + shift - 7 : yabai -m window --space 7 || { yabai -m space --create ; yabai -m window --space last; }
+cmd + shift - 8 : yabai -m window --space 8 || { yabai -m space --create ; yabai -m window --space last; }
+cmd + shift - 9 : yabai -m window --space 9 || { yabai -m space --create ; yabai -m window --space last; }
+cmd + shift - 0 : yabai -m window --space 10 || { yabai -m space --create ; yabai -m window --space last; }
 
 # create space and focus
 cmd + shift - n : yabai -m space --create && \
