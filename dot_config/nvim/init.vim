@@ -57,8 +57,8 @@ nnoremap <Space>ip       :'{,'}s/\<<C-r>=expand('<cword>')<CR>\>/
 nnoremap <Space><Space>  :%s/\<<C-r>=expand('<cword>')<CR>\>/
 
 " Quick change
-nnoremap cn *``cgn
-nnoremap cN #``cgN
+nnoremap cn /\<<C-R>=expand('<cword>')<CR>\>\C<CR>``cgn
+nnoremap cN ?\<<C-R>=expand('<cword>')<CR>\>\C<CR>``cgN
 
 " Better split switching
 nnoremap <C-h> <C-w>h
