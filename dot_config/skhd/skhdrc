@@ -1,5 +1,5 @@
 # open apps
-cmd - return    : open -n -a alacritty
+cmd - return    : open -na alacritty
 cmd + shift - f : open-app finder
 cmd + shift - t : open -nga firefox
 # cmd + shift - 0x2A : killall KeyCastr || open -a KeyCastr --background
@@ -23,7 +23,7 @@ cmd - 0x29         : yabai -m space --padding rel:-5:-5:-5:-5
 cmd - 0x27         : yabai -m space --padding rel:5:5:5:5
 cmd + shift - 0x29 : yabai -m space --gap rel:-5
 cmd + shift - 0x27 : yabai -m space --gap rel:5
-cmd + shift - g    : togglegaps
+cmd + shift - p    : togglegaps
 
 # layout toggles
 ctrl - space        : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2 && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
@@ -37,29 +37,30 @@ cmd - j : yabai -m window --focus south
 cmd - k : yabai -m window --focus north
 cmd - l : yabai -m window --focus east
 
-# swap node
-# cmd + shift - h : yabai -m window --swap west
-# cmd + shift - j : yabai -m window --swap south
-# cmd + shift - k : yabai -m window --swap north
-# cmd + shift - l : yabai -m window --swap east
-
 # focus space
-cmd - 1 : yabai -m space --focus 1 || { yabai -m space --create ; yabai -m space --focus last; }
-cmd - 2 : yabai -m space --focus 2 || { yabai -m space --create ; yabai -m space --focus last; }
-cmd - 3 : yabai -m space --focus 3 || { yabai -m space --create ; yabai -m space --focus last; }
-cmd - 4 : yabai -m space --focus 4 || { yabai -m space --create ; yabai -m space --focus last; }
-cmd - 5 : yabai -m space --focus 5 || { yabai -m space --create ; yabai -m space --focus last; }
-cmd - 6 : yabai -m space --focus 6 || { yabai -m space --create ; yabai -m space --focus last; }
-cmd - 7 : yabai -m space --focus 7 || { yabai -m space --create ; yabai -m space --focus last; }
-cmd - 8 : yabai -m space --focus 8 || { yabai -m space --create ; yabai -m space --focus last; }
-cmd - 9 : yabai -m space --focus 9 || { yabai -m space --create ; yabai -m space --focus last; }
-cmd - 0 : yabai -m space --focus 10 || { yabai -m space --create ; yabai -m space --focus last; }
+# this one requires an external script, but works as expected
+cmd - 1 : yabaifocus 1
+cmd - 2 : yabaifocus 2
+cmd - 3 : yabaifocus 3
+cmd - 4 : yabaifocus 4
+cmd - 5 : yabaifocus 5
+cmd - 6 : yabaifocus 6
+cmd - 7 : yabaifocus 7
+cmd - 8 : yabaifocus 8
+cmd - 9 : yabaifocus 9
+cmd - 0 : yabaifocus 10
+
+# swap node
+cmd + shift - h : yabai -m window --swap west
+cmd + shift - j : yabai -m window --swap south
+cmd + shift - k : yabai -m window --swap north
+cmd + shift - l : yabai -m window --swap east
 
 # warp node
-cmd + shift - h : yabai -m window --warp west
-cmd + shift - j : yabai -m window --warp south
-cmd + shift - k : yabai -m window --warp north
-cmd + shift - l : yabai -m window --warp east
+cmd + alt - h : yabai -m window --warp west
+cmd + alt - j : yabai -m window --warp south
+cmd + alt - k : yabai -m window --warp north
+cmd + alt - l : yabai -m window --warp east
 
 # warp node to space
 cmd + shift - 1 : yabai -m window --space 1 || { yabai -m space --create ; yabai -m window --space last; }
@@ -103,15 +104,15 @@ ctrl - f : yabai -m window --toggle zoom-fullscreen
 ctrl - e : yabai -m window --toggle split
 
 # swap current and biggest node
-cmd - g : \
-    largest_id=$(yabai -m query --windows --window largest | jq -r '.id');\
-    current_id=$(yabai -m query --windows --window | jq -r '.id');\
-    if [ "$largest_id" != "$current_id" ]; then;\
-      echo "$largest_id" > "${TMPDIR}/yabai_last_window_swapped_wid";\
-      yabai -m window --swap largest;\
-    elif test -f "${TMPDIR}/yabai_last_window_swapped_wid"; then;\
-      yabai -m window --swap $(cat "${TMPDIR}/yabai_last_window_swapped_wid");\
-    fi;
+cmd + shift - return : \
+	    largest_id=$(yabai -m query --windows --window largest | jq -r '.id');\
+	    current_id=$(yabai -m query --windows --window | jq -r '.id');\
+	    if [ "$largest_id" != "$current_id" ]; then;\
+	      echo "$largest_id" > "${TMPDIR}/yabai_last_window_swapped_wid";\
+	      yabai -m window --swap largest;\
+	    elif test -f "${TMPDIR}/yabai_last_window_swapped_wid"; then;\
+	      yabai -m window --swap $(cat "${TMPDIR}/yabai_last_window_swapped_wid");\
+	    fi;
 
 # passthrough mode
 :: passthrough
