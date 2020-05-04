@@ -23,7 +23,8 @@ cmd - 0x29         : yabai -m space --padding rel:-5:-5:-5:-5
 cmd - 0x27         : yabai -m space --padding rel:5:5:5:5
 cmd + shift - 0x29 : yabai -m space --gap rel:-5
 cmd + shift - 0x27 : yabai -m space --gap rel:5
-cmd + shift - p    : togglegaps
+cmd + shift - p    : yabai -m space --toggle padding ; yabai -m space --toggle gap
+# cmd + shift - p    : togglegaps
 
 # layout toggles
 ctrl - space        : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2 && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true

@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
-# bar
+# start bar
 launchctl load /usr/local/opt/spacebar/homebrew.mxcl.spacebar.plist
-yabai -m config external_bar                 all:26:0
+yabai -m config external_bar all:26:0
 
-# border
+# set border colors
 yabaicolor
 
 # global settings
@@ -25,7 +25,7 @@ yabai -m config mouse_action2                resize
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  36
+yabai -m config top_padding                  10
 yabai -m config bottom_padding               10
 yabai -m config left_padding                 10
 yabai -m config right_padding                10
