@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# changes yabai colors
+
+# import the colors
+. "${HOME}/.cache/wal/colors.sh"
+
+# set the bar color
+spacebar -m config background_color 0xff"${color0//#}"
+spacebar -m config foreground_color 0xff"${color7//#}"
+
+# set the border color
+yabai -m config insert_feedback_color 0xff"${color7//#}"

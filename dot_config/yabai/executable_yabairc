@@ -2,9 +2,10 @@
 
 # bar
 launchctl load /usr/local/opt/spacebar/homebrew.mxcl.spacebar.plist
+yabai -m config external_bar                 all:26:0
 
 # border
-yabaiborder
+yabaicolor
 
 # global settings
 yabai -m config mouse_follows_focus          off

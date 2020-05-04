@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+
+if yabai -m space --focus "$1" ; then
+    break
+else
+    current_space="$(yabai -m query --spaces --space | jq .index)"
+    if [ $current_space != "$1" ] ; then
+	yabai -m space --create
+	yabai -m space --focus last
+    else
+	break
+    fi
+fi

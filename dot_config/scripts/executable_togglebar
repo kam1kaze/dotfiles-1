@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+
+ps cax | grep spacebar > /dev/null
+if [ $? -eq 0 ] ; then
+    launchctl unload /usr/local/opt/spacebar/homebrew.mxcl.spacebar.plist
+else
+    launchctl load /usr/local/opt/spacebar/homebrew.mxcl.spacebar.plist
+fi
