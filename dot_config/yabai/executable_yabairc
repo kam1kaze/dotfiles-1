@@ -1,8 +1,14 @@
 #!/usr/bin/env sh
 
-# start bar
-launchctl load /usr/local/opt/spacebar/homebrew.mxcl.spacebar.plist
-yabai -m config external_bar all:26:0
+# bar
+ps cax | grep spacebar > /dev/null
+if [ $? -eq 0 ] ; then
+    yabai -m config external_bar all:26:0
+    yabai -m config top_padding 10
+else 
+    yabai -m config external_bar all:0:0
+    yabai -m config top_padding 10
+fi
 
 # set border colors
 yabaicolor
@@ -19,7 +25,7 @@ yabai -m config active_window_opacity        1.0
 yabai -m config normal_window_opacity        0.9
 yabai -m config split_ratio                  0.50
 yabai -m config auto_balance                 off
-yabai -m config mouse_modifier               ctrl
+yabai -m config mouse_modifier               cmd
 yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
@@ -33,6 +39,10 @@ yabai -m config window_gap                   10
 
 # don't manage system preferences
 yabai -m rule --add app="System Preferences" manage=off
+
+# window rules
+yabai -m rule --add app="Firefox" space=1
+yabai -m rule --add app="Spotify" space=5
 
 # signals
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"

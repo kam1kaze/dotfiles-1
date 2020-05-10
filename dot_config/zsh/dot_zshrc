@@ -60,6 +60,11 @@ alias src='config edit .config/skhd/skhdrc'
 alias vim='nvim'
 alias vimdiff='nvim -d'
 
+# macfeh
+function feh() {
+    open -b "drabweb.macfeh" "$@"
+}
+
 # import colorscheme from 'wal' asynchronously
 # &   # Run the process in the background.
 # ( ) # Hide shell job control messages.

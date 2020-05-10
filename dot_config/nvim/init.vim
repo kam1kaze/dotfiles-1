@@ -16,9 +16,6 @@ call plug#begin('~/.config/nvim/plugged')
 call plug#end()
 
 
-" plugin settings
-
-
 " various settings
 set clipboard+=unnamedplus
 set backspace=indent,eol,start
@@ -33,16 +30,15 @@ set mouse=a
 set number
 set wildcharm=<C-z>
 set cmdheight=1
-set shortmess=at
 set scrolloff=5
+set shortmess=at
 set laststatus=0
 set softtabstop=4
 set undofile
 set undodir=$HOME/.config/nvim/undodir
-set lazyredraw
 set completeopt+=menuone
 set shortmess+=c
-set updatetime=100
+" set updatetime=100
 
 
 " mappings
@@ -59,16 +55,6 @@ nnoremap <Space><Space>  :%s/\<<C-r>=expand('<cword>')<CR>\>/
 " Quick change
 nnoremap cn /\<<C-R>=expand('<cword>')<CR>\>\C<CR>``cgn
 nnoremap cN ?\<<C-R>=expand('<cword>')<CR>\>\C<CR>``cgN
-
-" Better split switching
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-
-" Smooth searching
-cnoremap <expr> <Tab>   getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>/<C-r>/" : "<C-z>"
-cnoremap <expr> <S-Tab> getcmdtype() == "/" \|\| getcmdtype() == "?" ? "<CR>?<C-r>/" : "<S-Tab>"
 
 " Better j and k
 nnoremap <expr> j v:count ? 'j' : 'gj'
