@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 
+
 # bar
-ps cax | grep spacebar > /dev/null
+ps cax | grep spacebar &> /dev/null
 if [ $? -eq 0 ] ; then
     yabai -m config external_bar all:26:0
     yabai -m config top_padding 10
@@ -38,28 +39,27 @@ yabai -m config right_padding                10
 yabai -m config window_gap                   10
 
 # don't manage system preferences
-yabai -m rule --add app="System Preferences" manage=off
-
-# window rules
-yabai -m rule --add app="Firefox" space=1
-yabai -m rule --add app="Spotify" space=5
+yabai -m rule --add app="^System Preferences$" manage=off
 
 # signals
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 
-# auto destroy space
-read -r -d '' action <<- 'EOF'
-  recent_space_index="$(yabai -m query --spaces | 
-    jq -er 'map(select(.id | tostring == env.YABAI_RECENT_SPACE_ID))[0].index')"
-  if yabai -m query --windows --space "${recent_space_index}" |
-    jq -er 'length == 0'
-  then
-    yabai -m space "${recent_space_index}" --destroy
-  fi
-EOF
+# delete monocle mode lock files from previous sessions
+find "${TMPDIR}" -type f -perm +111 -name "yabai_${USER}_monocle_mode_*" -delete
 
-yabai -m signal --add event='space_changed' action="${action}"
+# # automatically destroy empty spaces
+# read -r -d '' action <<- 'EOF'
+#   recent_space_index="$(yabai -m query --spaces | 
+#     jq -er 'map(select(.id | tostring == env.YABAI_RECENT_SPACE_ID))[0].index')"
+#   if yabai -m query --windows --space "${recent_space_index}" |
+#     jq -er 'length == 0'
+#   then
+#     yabai -m space "${recent_space_index}" --destroy
+#   fi
+# EOF
+
+# yabai -m signal --add event='space_changed' action="${action}"
 
 # autoupdate
 YABAI_CERT=yabai-cert sh -c "$(curl -sSL "https://git.io/update-yabai")" &

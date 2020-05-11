@@ -12,13 +12,13 @@ ctrl + shift - 0 : scr -s
 alt - tab         : yabai -m window --focus next || yabai -m window --focus "$((yabai -m query --spaces --display next || yabai -m query --spaces --display first) | jq -re '.[] | select(.visible == 1)."first-window"')"
 shift + alt - tab : yabai -m window --focus prev || yabai -m window --focus "$((yabai -m query --spaces --display prev || yabai -m query --spaces --display last) | jq -re '.[] | select(.visible == 1)."last-window"')"
 
-# yabai
+# restart, quit, or start yabai
 cmd + shift - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 cmd + shift - q : launchctl unload /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
 cmd + shift - y : launchctl load /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
 
 # toggle bar
-cmd + shift - b    : togglebar
+cmd + shift - b    : toggle_bar
 
 # increase or decrease padding or gaps
 cmd - 0x29         : yabai -m space --padding rel:-5:-5:-5:-5 ; yabai -m space --gap rel:-5
@@ -40,17 +40,16 @@ cmd - k : yabai -m window --focus north
 cmd - l : yabai -m window --focus east
 
 # focus space
-# this one requires an external script, but works as expected
-cmd - 1 : yabaifocus 1
-cmd - 2 : yabaifocus 2
-cmd - 3 : yabaifocus 3
-cmd - 4 : yabaifocus 4
-cmd - 5 : yabaifocus 5
-cmd - 6 : yabaifocus 6
-cmd - 7 : yabaifocus 7
-cmd - 8 : yabaifocus 8
-cmd - 9 : yabaifocus 9
-cmd - 0 : yabaifocus 10
+cmd - 1 : yabai_focus 1
+cmd - 2 : yabai_focus 2
+cmd - 3 : yabai_focus 3
+cmd - 4 : yabai_focus 4
+cmd - 5 : yabai_focus 5
+cmd - 6 : yabai_focus 6
+cmd - 7 : yabai_focus 7
+cmd - 8 : yabai_focus 8
+cmd - 9 : yabai_focus 9
+cmd - 0 : yabai_focus 10
 
 # swap node
 cmd + shift - h : yabai -m window --swap west
@@ -69,11 +68,11 @@ cmd + shift - return : \
 	      yabai -m window --swap $(cat "${TMPDIR}/yabai_last_window_swapped_wid");\
 	    fi;
 
-# warp node
-cmd + alt - h : yabai -m window --warp west
-cmd + alt - j : yabai -m window --warp south
-cmd + alt - k : yabai -m window --warp north
-cmd + alt - l : yabai -m window --warp east
+# move node
+cmd + ctrl - h : yabai_move west
+cmd + ctrl - j : yabai_move south
+cmd + ctrl - k : yabai_move north
+cmd + ctrl - l : yabai_move east
 
 # warp node to space
 cmd + shift - 1 : yabai -m window --space 1 || { yabai -m space --create ; yabai -m window --space last; }
@@ -92,17 +91,14 @@ cmd + shift - n : yabai -m space --create && \
                   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
                   yabai -m space --focus "${index}"
 
-# move floating window
-cmd + shift - up    : yabai -m window --move rel:0:-20
-cmd + shift - left  : yabai -m window --move rel:-20:0
-cmd + shift - down  : yabai -m window --move rel:0:20
-cmd + shift - right : yabai -m window --move rel:20:0
+# remove current space
+cmd + shift - d : yabai -m space --focus "$(yabai -m query --spaces --display | jq 'nth(index(map(select(.focused == 1))) + 1).index // (reverse | nth(index(map(select(.focused == 1))) + 1).index) // 0')" && yabai -m space recent --destroy
 
 # resize node
-cmd + ctrl - h : yabairesize west
-cmd + ctrl - j : yabairesize south
-cmd + ctrl - k : yabairesize north
-cmd + ctrl - l : yabairesize east
+ctrl + shift - h : yabai_resize west
+ctrl + shift - j : yabai_resize south
+ctrl + shift - k : yabai_resize north
+ctrl + shift - l : yabai_resize east
 
 # set insertion point in focused container
 # cmd + ctrl - h : yabai -m window --insert west
@@ -111,10 +107,13 @@ cmd + ctrl - l : yabairesize east
 # cmd + ctrl - l : yabai -m window --insert east
 
 # toggle window fullscreen zoom
-ctrl - f : yabai -m window --toggle zoom-fullscreen
+ctrl - f : yabai_monocle
 
 # toggle window split type
 ctrl - e : yabai -m window --toggle split
+
+#scratchpad
+alt + shift - return : scratchpad
 
 # passthrough mode
 :: passthrough
