@@ -27,7 +27,8 @@ set noruler
 set noshowmode
 set noshowcmd
 set mouse=a
-set number
+" set number
+set splitbelow splitright
 set wildcharm=<C-z>
 set cmdheight=1
 set scrolloff=5
@@ -38,7 +39,6 @@ set undofile
 set undodir=$HOME/.config/nvim/undodir
 set completeopt+=menuone
 set shortmess+=c
-" set updatetime=100
 
 
 " mappings

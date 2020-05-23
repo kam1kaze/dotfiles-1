@@ -146,16 +146,8 @@ selection:
 dynamic_title: true
 
 cursor:
-  # Values for `style`:
-  #   - ▇ Block
-  #   - _ Underline
-  #   - | Beam
   style: Beam
-
-  #vi_mode_style: None
-
   unfocused_hollow: true
-
   #thickness: 0.15
 
 # Live config reload (changes require restart)
@@ -173,11 +165,7 @@ live_config_reload: true
 alt_send_esc: true
 
 mouse:
-  #double_click: { threshold: 300 }
-  #triple_click: { threshold: 300 }
-
   hide_when_typing: true
-
   url:
     launcher:
      program: open

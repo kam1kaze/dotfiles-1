@@ -2,7 +2,7 @@
 # apply `wal` colors to additional programs
 
 # yabai colors
-yabaicolor &
+yabai_color &
 
 # alacritty colors
 alacritty_wal &> /dev/null

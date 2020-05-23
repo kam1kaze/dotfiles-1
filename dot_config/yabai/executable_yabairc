@@ -38,8 +38,9 @@ yabai -m config left_padding                 10
 yabai -m config right_padding                10
 yabai -m config window_gap                   10
 
-# don't manage system preferences
-yabai -m rule --add app="^System Preferences$" manage=off
+# rules
+yabai -m rule --add app="^System Preferences$" layer=above manage=off
+yabai -m rule --add app="^mupdf-gl$" manage=on
 
 # signals
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
@@ -64,3 +65,9 @@ find "${TMPDIR}" -type f -perm +111 -name "yabai_${USER}_monocle_mode_*" -delete
 # autoupdate
 YABAI_CERT=yabai-cert sh -c "$(curl -sSL "https://git.io/update-yabai")" &
 
+# tell limelight to refresh when the focused application changes (see issue #3)
+# yabai -m signal --add event=application_activated action="pkill -SIGUSR1 limelight &> /dev/null"
+
+# kill any existing limelight process if one exists, before we launch a new one
+# killall limelight &> /dev/null
+# /usr/local/bin/limelight &> /dev/null &

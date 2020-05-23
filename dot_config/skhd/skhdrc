@@ -32,6 +32,8 @@ ctrl - space        : yabai -m window --toggle float && yabai -m window --grid 4
 ctrl - s            : yabai -m window --toggle sticky
 ctrl - o            : yabai -m window --toggle topmost
 cmd + shift - space : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+ctrl - f : yabai_monocle
+
 
 # focus node
 cmd - h : yabai -m window --focus west
@@ -105,9 +107,6 @@ ctrl + shift - l : yabai_resize east
 # cmd + ctrl - j : yabai -m window --insert south
 # cmd + ctrl - k : yabai -m window --insert north
 # cmd + ctrl - l : yabai -m window --insert east
-
-# toggle window fullscreen zoom
-ctrl - f : yabai_monocle
 
 # toggle window split type
 ctrl - e : yabai -m window --toggle split

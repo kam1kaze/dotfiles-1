@@ -51,6 +51,11 @@ zle -N zle-keymap-select
 # fix pasting
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
 
+# suspend or enter vim
+_zsh_cli_fg() { fg; }
+zle -N _zsh_cli_fg
+bindkey '^Z' _zsh_cli_fg
+
 # aliases
 alias config='chezmoi'
 alias bluetooth='bluetoothconnector'
