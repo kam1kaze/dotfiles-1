@@ -8,14 +8,24 @@ cmd + shift - t : open -nga firefox
 alt + shift - 0  : scr
 ctrl + shift - 0 : scr -s
 
-# cycle through nodes
-alt - tab         : yabai -m window --focus next || yabai -m window --focus "$((yabai -m query --spaces --display next || yabai -m query --spaces --display first) | jq -re '.[] | select(.visible == 1)."first-window"')"
-shift + alt - tab : yabai -m window --focus prev || yabai -m window --focus "$((yabai -m query --spaces --display prev || yabai -m query --spaces --display last) | jq -re '.[] | select(.visible == 1)."last-window"')"
+# cycle forwards
+alt - tab : yabai -m query --spaces \
+  | jq -re ".[] | select(.visible == 1).index" \
+  | xargs -I{} yabai -m query --windows --space {} \
+  | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | reverse | nth(index(map(select(.focused == 1))) - 1).id" \
+  | xargs -I{} yabai -m window --focus {}
+
+# cycle backwards
+shift +  alt - tab : yabai -m query --spaces \
+  | jq -re ".[] | select(.visible == 1).index" \
+  | xargs -I{} yabai -m query --windows --space {} \
+  | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | nth(index(map(select(.focused == 1))) - 1).id" \
+  | xargs -I{} yabai -m window --focus {}
 
 # restart, quit, or start yabai
 cmd + shift - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
-cmd + shift - q : launchctl unload /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
-cmd + shift - y : launchctl load /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
+cmd + shift - q : launchctl unload /usr/local/opt/yabai/homebrew.mxcl.yabai.plist ; killall limelight &> /dev/null
+cmd + shift - y : launchctl load /usr/local/opt/yabai/homebrew.mxcl.yabai.plist ; limelight &> /dev/null &
 
 # toggle bar
 cmd + shift - b    : toggle_bar
@@ -28,11 +38,11 @@ cmd - 0x27         : yabai -m space --padding rel:5:5:5:5 ; yabai -m space --gap
 cmd + shift - p    : yabai -m space --toggle padding ; yabai -m space --toggle gap
 
 # layout toggles
-ctrl - space        : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2 && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
-ctrl - s            : yabai -m window --toggle sticky
-ctrl - o            : yabai -m window --toggle topmost
-cmd + shift - space : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
-ctrl - f : yabai_monocle
+ctrl + shift - space : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2 && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
+ctrl - s             : yabai -m window --toggle sticky
+ctrl - o             : yabai -m window --toggle topmost
+cmd + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+ctrl - f             : yabai_monocle
 
 
 # focus node

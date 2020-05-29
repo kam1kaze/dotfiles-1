@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+
+# import the colors
+. "${HOME}/.cache/wal/colors.sh"
+
+limelight -m config width            4
+limelight -m config radius           -1
+limelight -m config placement        inset
+limelight -m config active_color     0xff"${color7//#}"
+limelight -m config normal_color     0xff555555

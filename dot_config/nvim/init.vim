@@ -78,12 +78,12 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
 " lua
 :lua << EOF
   local nvim_lsp = require('nvim_lsp')
-  nvim_lsp.pyls.setup{}
-  require'nvim_lsp'.pyls.setup{}
+  nvim_lsp.pyls_ms.setup{}
+  require'nvim_lsp'.pyls_ms.setup{}
 EOF
 
 let settings = {
-          \   "pyls" : {
+          \   "pyls_ms" : {
           \     "enable" : v:true,
           \     "trace" : { "server" : "verbose", },
           \     "commandPath" : "",

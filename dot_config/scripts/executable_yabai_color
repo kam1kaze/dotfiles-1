@@ -8,5 +8,6 @@
 spacebar -m config background_color 0xff"${color0//#}"
 spacebar -m config foreground_color 0xff"${color7//#}"
 
-# set the border color
+# set the border colors
 yabai -m config insert_feedback_color 0xff"${color7//#}"
+limelight -m config active_color      0xff"${color7//#}"
