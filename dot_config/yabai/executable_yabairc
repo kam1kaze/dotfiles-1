@@ -1,6 +1,9 @@
 #!/usr/bin/env sh
 
 
+# import the colors
+. "${HOME}/.cache/wal/colors.sh"
+
 # bar
 ps cax | grep spacebar &> /dev/null
 if [ $? -eq 0 ] ; then
@@ -12,10 +15,10 @@ else
 fi
 
 # set border colors
-yabaicolor
+yabai_color
 
 # global settings
-yabai -m config mouse_follows_focus          on
+yabai -m config mouse_follows_focus          off
 yabai -m config focus_follows_mouse          autoraise
 yabai -m config window_placement             second_child
 yabai -m config window_topmost               on
@@ -38,37 +41,18 @@ yabai -m config left_padding                 10
 yabai -m config right_padding                10
 yabai -m config window_gap                   10
 
+# borders
+yabai -m config window_border                on
+yabai -m config window_border_width          6
+yabai -m config active_window_border_color   0xff"${color7//#}"
+yabai -m config normal_window_border_color   0xff"${color8//#}"
+
 # rules
-yabai -m rule --add app="^System Preferences$" layer=above manage=off
-yabai -m rule --add app="^mupdf-gl$" manage=on
+yabai -m rule --add app="^System Preferences$" layer=above manage=off border=off
 
 # signals
-# yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
-# yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 
-# delete monocle mode lock files from previous sessions
-find "${TMPDIR}" -type f -perm +111 -name "yabai_${USER}_monocle_mode_*" -delete
-
-function focus_under_cursor {
-  if yabai -m query --windows --space |
-      jq -er 'map(select(.focused == 1)) | length == 0' >/dev/null; then
-    yabai -m window --focus mouse 2>/dev/null || true
-  fi
-}
-
-# If no window on the current space is focused after a window is destroyed or
-# minimized, or an application is hidden, focus the window under the cursor.
-yabai -m signal --add event=window_destroyed \
-  action="${functions[focus_under_cursor]}"
-yabai -m signal --add event=window_minimized \
-  action="${functions[focus_under_cursor]}"
-yabai -m signal --add event=application_hidden \
-  action="${functions[focus_under_cursor]}"
-yabai -m signal --add event=space_changed \
-  action="${functions[focus_under_cursor]}"
-yabai -m signal --add event=display_changed \
-  action="${functions[focus_under_cursor]}"
-
-# borders
-killall limelight &> /dev/null
-limelight &> /dev/null &
+# autoupdate
+YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &

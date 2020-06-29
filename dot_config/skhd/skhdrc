@@ -16,7 +16,7 @@ alt - tab : yabai -m query --spaces \
   | xargs -I{} yabai -m window --focus {}
 
 # cycle backwards
-shift +  alt - tab : yabai -m query --spaces \
+alt + shift - tab : yabai -m query --spaces \
   | jq -re ".[] | select(.visible == 1).index" \
   | xargs -I{} yabai -m query --windows --space {} \
   | jq -sre "add | sort_by(.display, .frame.x, .frame.y, .id) | nth(index(map(select(.focused == 1))) - 1).id" \
@@ -27,22 +27,17 @@ cmd + shift - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 cmd + shift - q : launchctl unload /usr/local/opt/yabai/homebrew.mxcl.yabai.plist ; killall limelight &> /dev/null
 cmd + shift - y : launchctl load /usr/local/opt/yabai/homebrew.mxcl.yabai.plist ; limelight &> /dev/null &
 
-# toggle bar
-cmd + shift - b    : toggle_bar
-
-# increase or decrease padding or gaps
-cmd - 0x29         : yabai -m space --padding rel:-5:-5:-5:-5 ; yabai -m space --gap rel:-5
-cmd - 0x27         : yabai -m space --padding rel:5:5:5:5 ; yabai -m space --gap rel:5
-
-# toggle padding and gaps on the current space
-cmd + shift - p    : yabai -m space --toggle padding ; yabai -m space --toggle gap
-
-# layout toggles
+# toggles
+cmd + shift - b      : toggle_bar
+cmd + shift - d      : yabai_border
+cmd - 0x29           : yabai -m space --padding rel:-5:-5:-5:-5 ; yabai -m space --gap rel:-5
+cmd - 0x27           : yabai -m space --padding rel:5:5:5:5 ; yabai -m space --gap rel:5
+cmd + shift - p      : yabai -m space --toggle padding ; yabai -m space --toggle gap
 ctrl + shift - space : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2 && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
 ctrl - s             : yabai -m window --toggle sticky
-ctrl - o             : yabai -m window --toggle topmost
+ctrl - t             : yabai -m window --toggle topmost
 cmd + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
-ctrl - f             : yabai_monocle
+ctrl - i             : yabai -m window --toggle split
 
 
 # focus node
@@ -63,12 +58,6 @@ cmd - 8 : yabai_focus 8
 cmd - 9 : yabai_focus 9
 cmd - 0 : yabai_focus 10
 
-# swap node
-cmd + shift - h : yabai -m window --swap west
-cmd + shift - j : yabai -m window --swap south
-cmd + shift - k : yabai -m window --swap north
-cmd + shift - l : yabai -m window --swap east
-
 # swap current and biggest node
 cmd + shift - return : \
 	    largest_id=$(yabai -m query --windows --window largest | jq -r '.id');\
@@ -80,11 +69,30 @@ cmd + shift - return : \
 	      yabai -m window --swap $(cat "${TMPDIR}/yabai_last_window_swapped_wid");\
 	    fi;
 
-# move node
-cmd + ctrl - h : yabai_move west
-cmd + ctrl - j : yabai_move south
-cmd + ctrl - k : yabai_move north
-cmd + ctrl - l : yabai_move east
+# warp node
+cmd + shift - h : yabai -m window --warp west
+cmd + shift - j : yabai -m window --warp south
+cmd + shift - k : yabai -m window --warp north
+cmd + shift - l : yabai -m window --warp east
+
+# swap node
+ctrl + shift - h : yabai -m window --swap west
+ctrl + shift - j : yabai -m window --swap south
+ctrl + shift - k : yabai -m window --swap north
+ctrl + shift - l : yabai -m window --swap east
+
+# set insertion point
+cmd + ctrl - h : yabai -m window --insert west
+cmd + ctrl - j : yabai -m window --insert south
+cmd + ctrl - k : yabai -m window --insert north
+cmd + ctrl - l : yabai -m window --insert east
+cmd + ctrl - i : yabai -m window --insert stack
+
+# stack node
+cmd + ctrl - left  : yabai -m window west --stack $(yabai -m query --windows --window | jq -r '.id')
+cmd + ctrl - down  : yabai -m window south --stack $(yabai -m query --windows --window | jq -r '.id')
+cmd + ctrl - up    : yabai -m window north --stack $(yabai -m query --windows --window | jq -r '.id')
+cmd + ctrl - right : yabai -m window east --stack $(yabai -m query --windows --window | jq -r '.id')
 
 # warp node to space
 cmd + shift - 1 : yabai -m window --space 1 || { yabai -m space --create ; yabai -m window --space last; }
@@ -104,24 +112,15 @@ cmd + shift - n : yabai -m space --create && \
                   yabai -m space --focus "${index}"
 
 # remove current space
-cmd + shift - d : yabai -m space --focus "$(yabai -m query --spaces --display | jq 'nth(index(map(select(.focused == 1))) + 1).index // (reverse | nth(index(map(select(.focused == 1))) + 1).index) // 0')" && yabai -m space recent --destroy
+cmd + shift - w : yabai -m space --focus "$(yabai -m query --spaces --display | jq 'nth(index(map(select(.focused == 1))) + 1).index // (reverse | nth(index(map(select(.focused == 1))) + 1).index) // 0')" && yabai -m space recent --destroy
 
 # resize node
-ctrl + shift - h : yabai_resize west
-ctrl + shift - j : yabai_resize south
-ctrl + shift - k : yabai_resize north
-ctrl + shift - l : yabai_resize east
+ctrl + shift - a : yabai_resize west
+ctrl + shift - s : yabai_resize south
+ctrl + shift - w : yabai_resize north
+ctrl + shift - d : yabai_resize east
 
-# set insertion point in focused container
-# cmd + ctrl - h : yabai -m window --insert west
-# cmd + ctrl - j : yabai -m window --insert south
-# cmd + ctrl - k : yabai -m window --insert north
-# cmd + ctrl - l : yabai -m window --insert east
-
-# toggle window split type
-ctrl - e : yabai -m window --toggle split
-
-#scratchpad
+# scratchpad
 alt + shift - return : scratchpad
 
 # passthrough mode

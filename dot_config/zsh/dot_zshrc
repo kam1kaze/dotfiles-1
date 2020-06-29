@@ -51,6 +51,15 @@ zle -N zle-keymap-select
 # fix pasting
 zstyle ':bracketed-paste-magic' active-widgets '.self-*'
 
+# yank to the system clipboard
+function vi-yank-xclip {
+    zle vi-yank
+   echo "$CUTBUFFER" | pbcopy -i
+}
+
+zle -N vi-yank-xclip
+bindkey -M vicmd 'y' vi-yank-xclip
+
 # suspend or enter vim
 _zsh_cli_fg() { fg; }
 zle -N _zsh_cli_fg
@@ -62,7 +71,7 @@ alias bluetooth='bluetoothconnector'
 alias vrc='config edit .config/nvim/init.vim'
 alias zrc='config edit .config/zsh/.zshrc'
 alias yrc='config edit .config/yabai/yabairc'
-alias lrc='config edit .config/limelight/limelightrc'
+alias barrc='config edit .config/spacebar/spacebarrc'
 alias src='config edit .config/skhd/skhdrc'
 alias vim='nvim'
 alias vimdiff='nvim -d'
