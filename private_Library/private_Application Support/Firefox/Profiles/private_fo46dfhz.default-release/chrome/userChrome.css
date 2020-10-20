@@ -4,4 +4,7 @@
 @import url(chrome/urlbar_centered_text.css);
 @import url(chrome/floating_findbar_on_top.css);
 @import url(chrome/hide_buttonbox.css);
+@import url(chrome/show_navbar_on_focus_only.css);
+/* @import url(chrome/combined_tabs_and_main_toolbars.css); */
+/* @import url(chrome/autohide_menubar.css); */
 

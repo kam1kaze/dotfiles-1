@@ -9,9 +9,14 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'romainl/vim-cool'
   Plug 'dylanaraps/wal.vim'
   Plug 'airblade/vim-gitgutter'
-  Plug 'lifepillar/vim-mucomplete'
-  Plug 'neovim/nvim-lsp'
+  " Plug 'lifepillar/vim-mucomplete'
+  " Plug 'neovim/nvim-lsp'
+  " Plug 'nvim-lua/diagnostic-nvim'
+  " Plug 'nvim-lua/completion-nvim'
   Plug 'tweekmonster/startuptime.vim'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'puremourning/vimspector'
+  Plug 'stevearc/vim-arduino'
 
 call plug#end()
 
@@ -27,7 +32,8 @@ set noruler
 set noshowmode
 set noshowcmd
 set mouse=a
-" set number
+set number
+set relativenumber
 set splitbelow splitright
 set wildcharm=<C-z>
 set cmdheight=1
@@ -35,13 +41,44 @@ set scrolloff=5
 set shortmess=at
 set laststatus=0
 set softtabstop=4
+set shiftround
 set undofile
 set undodir=$HOME/.config/nvim/undodir
-set completeopt+=menuone
+set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 
 " mappings
+" tab for trigger completion
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
 " Make Y work like D or C
 nnoremap Y y$
 
@@ -72,31 +109,11 @@ autocmd BufReadPost *
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Automatically close preview window during completions
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | silent! pclose | endif
 
-
-" lua
-:lua << EOF
-  local nvim_lsp = require('nvim_lsp')
-  nvim_lsp.pyls_ms.setup{}
-  require'nvim_lsp'.pyls_ms.setup{}
-EOF
-
-let settings = {
-          \   "pyls_ms" : {
-          \     "enable" : v:true,
-          \     "trace" : { "server" : "verbose", },
-          \     "commandPath" : "",
-          \     "configurationSources" : [ "pycodestyle" ],
-          \     "plugins" : {
-          \       "jedi_completion" : { "enabled" : v:true, },
-          \       "jedi_hover" : { "enabled" : v:true, },
-          \       "jedi_references" : { "enabled" : v:true, },
-          \       "jedi_signature_help" : { "enabled" : v:true, },
-          \       "jedi_symbols" : {
-          \         "enabled" : v:true,
-          \         "all_scopes" : v:true,
-          \       }}}}
+" change line numbers
+autocmd InsertEnter * :set norelativenumber
+autocmd	InsertLeave * :set relativenumber
 
 
 " colorscheme

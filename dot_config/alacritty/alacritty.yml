@@ -31,6 +31,9 @@ window:
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: true
 
+  # Allow terminal applications to change Alacritty's window title.
+  # dynamic_title: true
+
   # Window decorations
   #
   # Values for `decorations`:
@@ -129,7 +132,7 @@ font:
   #
   # This is a global setting and will require a log out or restart to take
   # effect.
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: false
@@ -141,9 +144,6 @@ selection:
   #semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
 
   save_to_clipboard: false
-
-# Allow terminal applications to change Alacritty's window title.
-dynamic_title: true
 
 cursor:
   style: Beam
@@ -175,11 +175,11 @@ mouse:
 key_bindings:
 
   # fonts and scrolling
-  - { key: Equals, mods: Alt|Shift,          action: ResetFontSize    }
   - { key: Add,    mods: Command,            action: IncreaseFontSize }
   - { key: Minus,  mods: Command,            action: DecreaseFontSize }
   - { key: K,      mods: Alt|Shift,          action: IncreaseFontSize }
   - { key: J,      mods: Alt|Shift,          action: DecreaseFontSize }
+  - { key: Equals, mods: Alt|Shift,          action: ResetFontSize    }
   - { key: K,      mods: Alt,                action: ScrollLineUp     }
   - { key: J,      mods: Alt,                action: ScrollLineDown   }
   - { key: U,      mods: Alt,                action: ScrollPageUp     }

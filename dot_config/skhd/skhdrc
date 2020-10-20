@@ -1,5 +1,6 @@
 # open apps
 cmd - return    : open -na alacritty
+# cmd - return    : alacritty
 cmd + shift - f : open-app finder
 cmd + shift - t : open -nga firefox
 # cmd + shift - 0x2A : killall KeyCastr || open -a KeyCastr --background
@@ -24,8 +25,8 @@ alt + shift - tab : yabai -m query --spaces \
 
 # restart, quit, or start yabai
 cmd + shift - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
-cmd + shift - q : launchctl unload /usr/local/opt/yabai/homebrew.mxcl.yabai.plist ; killall limelight &> /dev/null
-cmd + shift - y : launchctl load /usr/local/opt/yabai/homebrew.mxcl.yabai.plist ; limelight &> /dev/null &
+cmd + shift - q : launchctl unload /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
+cmd + shift - y : launchctl load /usr/local/opt/yabai/homebrew.mxcl.yabai.plist
 
 # toggles
 cmd + shift - b      : toggle_bar
@@ -36,7 +37,7 @@ cmd + shift - p      : yabai -m space --toggle padding ; yabai -m space --toggle
 ctrl + shift - space : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2 && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
 ctrl - s             : yabai -m window --toggle sticky
 ctrl - t             : yabai -m window --toggle topmost
-cmd + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" else "bsp" end')
+cmd + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" elif .type == "float" then "stack" else "bsp" end')
 ctrl - i             : yabai -m window --toggle split
 
 
