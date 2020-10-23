@@ -115,6 +115,14 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 autocmd InsertEnter * :set norelativenumber
 autocmd	InsertLeave * :set relativenumber
 
+" c++ stuff
+nmap <F2> :vs %:r.in <CR>
+nmap <F3> :!time ./%:r < %:r.in <CR>
+autocmd filetype cpp set mp=g++\ -O2\ -Wall\ --std=c++11\ -Wno-unused-result\ %:r.cpp\ -o\ %:r
+autocmd filetype cpp nnoremap <F4> :w <CR> :make<CR>
+autocmd filetype cpp nnoremap <F5> :w <bar> :make <bar> :!time ./%:r < %:r.in <CR>
+
+
 
 " colorscheme
 colorscheme wal
