@@ -9,14 +9,15 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'romainl/vim-cool'
   Plug 'dylanaraps/wal.vim'
   Plug 'airblade/vim-gitgutter'
-  " Plug 'lifepillar/vim-mucomplete'
-  " Plug 'neovim/nvim-lsp'
-  " Plug 'nvim-lua/diagnostic-nvim'
-  " Plug 'nvim-lua/completion-nvim'
   Plug 'tweekmonster/startuptime.vim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'puremourning/vimspector'
   Plug 'stevearc/vim-arduino'
+  Plug 'coddingtonbear/neomake-platformio'
+  " Plug 'lifepillar/vim-mucomplete'
+  " Plug 'neovim/nvim-lsp'
+  " Plug 'nvim-lua/diagnostic-nvim'
+  " Plug 'nvim-lua/completion-nvim'
 
 call plug#end()
 
@@ -116,12 +117,15 @@ autocmd InsertEnter * :set norelativenumber
 autocmd	InsertLeave * :set relativenumber
 
 " c++ stuff
-nmap <F2> :vs %:r.in <CR>
-nmap <F3> :!time ./%:r < %:r.in <CR>
 autocmd filetype cpp set mp=g++\ -O2\ -Wall\ --std=c++11\ -Wno-unused-result\ %:r.cpp\ -o\ %:r
-autocmd filetype cpp nnoremap <F4> :w <CR> :make<CR>
+autocmd filetype cpp nnoremap <F2> :vs %:r.in <CR>
+autocmd filetype cpp nnoremap <F3> :w<CR> :make<CR>
+autocmd filetype cpp nnoremap <F4> :!time ./%:r < %:r.in <CR>
 autocmd filetype cpp nnoremap <F5> :w <bar> :make <bar> :!time ./%:r < %:r.in <CR>
+autocmd filetype cpp setlocal shiftwidth=2 softtabstop=2 expandtab
 
+" arduino stuff
+let g:arduino_cmd = '/Applications/Arduino.app/Contents/MacOS/Arduino'
 
 
 " colorscheme

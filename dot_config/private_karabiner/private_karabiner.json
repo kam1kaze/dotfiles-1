@@ -275,6 +275,22 @@
                         },
                         {
                             "from": {
+                                "key_code": "f4"
+                            },
+                            "to": {
+                                "key_code": "f4"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "f5"
+                            },
+                            "to": {
+                                "key_code": "f5"
+                            }
+                        },
+                        {
+                            "from": {
                                 "key_code": "f11"
                             },
                             "to": {

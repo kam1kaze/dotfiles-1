@@ -39,6 +39,7 @@ ctrl - s             : yabai -m window --toggle sticky
 ctrl - t             : yabai -m window --toggle topmost
 cmd + shift - space  : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "float" elif .type == "float" then "stack" else "bsp" end')
 ctrl - i             : yabai -m window --toggle split
+ctrl - f             : yabai -m window --toggle zoom-fullscreen
 
 
 # focus node

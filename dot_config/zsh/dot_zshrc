@@ -68,13 +68,13 @@ bindkey '^Z' _zsh_cli_fg
 # aliases
 alias config='chezmoi'
 alias bluetooth='bluetoothconnector'
-alias vrc='chezmoi edit .config/nvim/init.vim'
-alias zrc='chezmoi edit .config/zsh/.zshrc'
-alias yrc='chezmoi edit .config/yabai/yabairc'
+alias vrc='chezmoi edit ~/.config/nvim/init.vim'
+alias zrc='chezmoi edit ~/.config/zsh/.zshrc'
+alias yrc='chezmoi edit ~/.config/yabai/yabairc'
 alias frc='chezmoi edit ~/Library/Application\ Support/Firefox/Profiles/fo46dfhz.default-release/chrome/userChrome.css'
-alias barrc='chezmoi edit .config/spacebar/spacebarrc'
-alias src='chezmoi edit .config/skhd/skhdrc'
-alias arc='chezmoi edit .config/alacritty/alacritty.yml'
+alias barrc='chezmoi edit ~/.config/spacebar/spacebarrc'
+alias src='chezmoi edit ~/.config/skhd/skhdrc'
+alias arc='chezmoi edit ~/.config/alacritty/alacritty.yml'
 alias vim='nvim'
 alias vimdiff='nvim -d'
 alias projects='cd "/Users/jacobethandelarosa-frio/Library/Mobile Documents/com~apple~CloudDocs/Documents/Stuff/Programming/Python/projects"'
@@ -95,7 +95,7 @@ function shfm() {
 (cat ~/.cache/wal/sequences &)
 
 # load pyenv
-eval "$(pyenv init - zsh --no-rehash)"
+# eval "$(pyenv init - zsh --no-rehash)"
 
 # conda
 # !! Contents within this block are managed by 'conda init' !!
